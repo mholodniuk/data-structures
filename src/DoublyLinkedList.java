@@ -3,7 +3,7 @@ package src;
 // doubly linked list
 // todo: skip nulls in toString()
 public class DoublyLinkedList<T> {
-    private static class Node<T> { // static bo ma być dostępny z poziomu instancji
+    private static class Node<T> {
         private T data;
         private Node<T> prev;
         private Node<T> next;
