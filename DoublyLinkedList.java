@@ -80,7 +80,7 @@ class DoublyLinkedList<T> implements Iterable<T> {
         for(int i=0; i < index-1; ++i)
             tmp = tmp.getNext();
         Node<T> newNode = new Node<T>(elem, tmp, tmp.getNext());
-        tmp.next.prev = newNode;
+        tmp.getNext().setPrev(newNode);
         tmp.setNext(newNode);
         
         size++;
