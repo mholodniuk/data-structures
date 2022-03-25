@@ -43,7 +43,7 @@ public class MyPriorityQueue<T> {
         return list;
     }
 
-    /*
+    
     public static void main(String[] args) {
         MyPriorityQueue<String> queue = new MyPriorityQueue<String>();
 
@@ -56,5 +56,5 @@ public class MyPriorityQueue<T> {
         queue.printAll();
 
     }
-    */
+    
 }
