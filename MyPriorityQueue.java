@@ -1,22 +1,36 @@
-
+import java.util.concurrent.ThreadLocalRandom;
 
 // klucz: od najmniejszwgo do najwiekszego
 public class MyPriorityQueue<T> {
-    static class PrioData<T> {
+    class PrioData {
         T data;
         int priority;
-        PrioData(T data, int priority) {
+        public PrioData(T data, int priority) {
             this.data = data;
             this.priority = priority;
         }
+        public int getPriority() {
+            return this.priority;
+        }
+        public T getData() {
+            return this.data;
+        }
     }
-    private DoublyLinkedList<PrioData<T>> queue = new DoublyLinkedList<>();
+    private DoublyLinkedList<PrioData> queue;
+
+    public MyPriorityQueue() {
+        this.queue = new DoublyLinkedList<>();
+    }
+
+    public MyPriorityQueue(DoublyLinkedList<PrioData> list) {
+        this.queue = list;
+    }
     
     // Metoda dodaje element zgodnie z wartoscia klucza
     public void enqueue(T newElement, int priority) {
-        PrioData<T> newNode = new PrioData<>(newElement, priority);
+        PrioData newNode = new PrioData(newElement, priority);
         int idx = 0;
-        for(PrioData<T> elem: queue) {
+        for(PrioData elem: queue) {
             if(priority < elem.priority)
                 break;
             idx++;
@@ -24,37 +38,72 @@ public class MyPriorityQueue<T> {
         queue.insert(newNode, idx);
     }
 
-    // Metoda usuwa ostatni element z kolejki
-    public T dequeue() {
+    // Metoda usuwa ostatni element z kolejki (o najmniejszym priorytecie)
+    public PrioData dequeue() {
+        T data = queue.peekLast().data;
+        int priority = queue.peekLast().priority;
+        queue.popBack();
+        return new PrioData(data, priority);
+    }
+
+    public T popBack() {
         T data = queue.peekLast().data;
         queue.popBack();
         return data;
     }
 
     public void printAll() {
-        for(PrioData<T> elem: queue) {
-            System.out.println(elem.data);
+        for(PrioData elem: queue) {
+            System.out.println(elem.getData());
         }
     }
 
-    public DoublyLinkedList<PrioData<T>> shuffle() {
-        DoublyLinkedList<PrioData<T>> list = new DoublyLinkedList<>();
-
-        return list;
+    public boolean isEmpty() {
+        if(queue.getSize() == 0) 
+            return true;
+        else 
+            return false;
     }
 
-    
+    // Metoda udaje losowanie kolejnosci w kolejce
+    public MyPriorityQueue<T> shuffle() {
+        MyPriorityQueue<T> newQueue = new MyPriorityQueue<>();
+		for(int i=0; i<queue.getSize(); ++i) {
+            if(ThreadLocalRandom.current().nextInt() % 5 == 0)
+                newQueue.queue.pushBack(queue.at(i));
+            else 
+                newQueue.queue.pushFront(queue.at(i));
+        }
+        return newQueue;
+    }
+
+    // Metoda sortuje nieposortowana kolejke
+    public MyPriorityQueue<T> sort() {
+        PrioData tmp;
+        MyPriorityQueue<T> que = new MyPriorityQueue<>();
+        while(!queue.isEmpty()) {
+            tmp = dequeue();
+            que.enqueue(tmp.getData(), tmp.getPriority());
+        }
+        return que;
+    }
+
     public static void main(String[] args) {
         MyPriorityQueue<String> queue = new MyPriorityQueue<String>();
 
-        queue.enqueue("dwa", 20);
-        queue.enqueue("jeden", 5);
-        queue.enqueue("trzy", 30);
+        queue.enqueue("dwa", 1);
+        queue.enqueue("jeden", 0);
+        queue.enqueue("trzy", 2);
+        queue.enqueue("piec", 4);
+        queue.enqueue("cztery", 3);
         queue.printAll();
+        System.out.println("\n");
 
-        System.out.println("Usunieto ostatni element z kolejki: " + queue.dequeue().toString()); 
-        queue.printAll();
+        MyPriorityQueue<String> kolejka = queue.shuffle();
+        kolejka.printAll();
+        System.out.println("\n");
 
+        kolejka = kolejka.sort();
+        kolejka.printAll();
     }
-    
 }

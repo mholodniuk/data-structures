@@ -120,6 +120,15 @@ class DoublyLinkedList<T> implements Iterable<T> {
         return data;
     }
 
+    public T at(int index) {
+        if(index < 0 || index > size) 
+            throw new IndexOutOfBoundsException("index out of bound");
+        Node<T> current = head;
+        while(current != null && index-- > 0)
+            current = current.getNext();
+        return current.getElement();
+    }
+
     public boolean remove(Object obj) {
         Node<T> trav = head;
         if (obj == null) {
