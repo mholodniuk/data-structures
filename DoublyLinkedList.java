@@ -1,7 +1,5 @@
 
 
-
-// doubly linked list
 class DoublyLinkedList<T> implements Iterable<T> {
 
     private static class Node<T> {
@@ -113,7 +111,7 @@ class DoublyLinkedList<T> implements Iterable<T> {
         if(isEmpty()) 
             throw new RuntimeException("Empty list");
         T data = tail.getElement();
-        head = tail.getPrev();
+        tail = tail.getPrev();
         size--;
         if(isEmpty()) 
             head = null;
