@@ -1,3 +1,4 @@
+package src;
 import java.util.concurrent.ThreadLocalRandom;
 
 // klucz: od najmniejszwgo do najwiekszego
@@ -65,7 +66,7 @@ public class MyPriorityQueue<T> {
             return false;
     }
 
-    // Metoda udaje losowanie kolejnosci w kolejce
+    // symulacja przemieszania kolejnosci w kolejce
     public MyPriorityQueue<T> shuffle() {
         MyPriorityQueue<T> newQueue = new MyPriorityQueue<>();
 		for(int i=0; i<queue.getSize(); ++i) {
@@ -77,7 +78,7 @@ public class MyPriorityQueue<T> {
         return newQueue;
     }
 
-    // Metoda sortuje nieposortowana kolejke
+    // sortowanie nieposortowanej kolejki
     public MyPriorityQueue<T> sort() {
         PrioData tmp;
         MyPriorityQueue<T> que = new MyPriorityQueue<>();

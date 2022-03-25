@@ -1,6 +1,10 @@
+package src;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+
+import javax.swing.*;
+import java.awt.event.*;
 
 public class MyMessenger {
     private MyPriorityQueue<String> messageQueue;
@@ -25,6 +29,7 @@ public class MyMessenger {
             Scanner myReader = new Scanner(messageFile);
             while(myReader.hasNextLine()) {
                 String line = myReader.nextLine();
+                //String[] lines = line.split("\\s+");
                 messageQueue.enqueue(line, numberOfLines);
                 ++numberOfLines;
             }
@@ -40,21 +45,27 @@ public class MyMessenger {
         messageQueue = messageQueue.shuffle();
     }
 
+    public void sort() {
+        messageQueue = messageQueue.sort();
+    }
+
     public void printMessage() {
         messageQueue.printAll();
     }
 
     public static void main(String[] args) {
         MyMessenger mess = new MyMessenger();
-        mess.readFromFile("message.txt");
-        System.out.println("oryginalna wiadomosc");
+        mess.readFromFile("res/message.txt");
+        System.out.println("Oryginalna wiadomosc: ");
         mess.printMessage();
-        System.out.println("Number of lines read: " + mess.getNumberOfLines() + "\n");
+        System.out.println("Ilosc linii w wiadomosci: " + mess.getNumberOfLines() + "\n");
 
-        System.out.println("pomieszana wiadomosc");
+        System.out.println("Pomieszana wiadomosc: ");
         mess.shuffle();
         mess.printMessage();
 
-        //System.out.println("posortowana wiadomosc");
+        System.out.println("Posortowana wiadomosc: ");
+        mess.sort();
+        mess.printMessage();
     }
 }
