@@ -1,8 +1,10 @@
 package src;
 import java.util.concurrent.ThreadLocalRandom;
 
+// Implementacja kolejki priorytetowej
 // klucz: od najmniejszwgo do najwiekszego
 public class MyPriorityQueue<T> {
+    // podklasa reprezatujaca strukture zawarta w kolejce
     class PrioData {
         T data;
         int priority;
@@ -17,14 +19,12 @@ public class MyPriorityQueue<T> {
             return this.data;
         }
     }
+    // implementacja kolejki za pomoca listy dwukierunkowej
     private DoublyLinkedList<PrioData> queue;
 
+    // konstruktor domyslny
     public MyPriorityQueue() {
         this.queue = new DoublyLinkedList<>();
-    }
-
-    public MyPriorityQueue(DoublyLinkedList<PrioData> list) {
-        this.queue = list;
     }
     
     // Metoda dodaje element zgodnie z wartoscia klucza
@@ -39,7 +39,7 @@ public class MyPriorityQueue<T> {
         queue.insert(newNode, idx);
     }
 
-    // Metoda usuwa ostatni element z kolejki (o najmniejszym priorytecie)
+    // Metoda usuwa ostatni element (dane + priorytet) z kolejki
     public PrioData dequeue() {
         T data = queue.peekLast().data;
         int priority = queue.peekLast().priority;
@@ -47,18 +47,14 @@ public class MyPriorityQueue<T> {
         return new PrioData(data, priority);
     }
 
-    public T popBack() {
-        T data = queue.peekLast().data;
-        queue.popBack();
-        return data;
-    }
-
+    // wypisanie zawartosci kolejki od poczatku
     public void printAll() {
         for(PrioData elem: queue) {
-            System.out.println(elem.getData());
+            System.out.println(elem.getData() + " " + elem.getPriority());
         }
     }
 
+    // sprawdzenie czy kolejka jest pusta
     public boolean isEmpty() {
         if(queue.getSize() == 0) 
             return true;
@@ -70,7 +66,7 @@ public class MyPriorityQueue<T> {
     public MyPriorityQueue<T> shuffle() {
         MyPriorityQueue<T> newQueue = new MyPriorityQueue<>();
 		for(int i=0; i<queue.getSize(); ++i) {
-            if(ThreadLocalRandom.current().nextInt() % 5 == 0)
+            if(ThreadLocalRandom.current().nextInt() % 2 == 0)
                 newQueue.queue.pushBack(queue.at(i));
             else 
                 newQueue.queue.pushFront(queue.at(i));

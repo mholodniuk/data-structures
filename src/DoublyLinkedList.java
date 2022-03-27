@@ -1,28 +1,30 @@
 package src;
 
-
+// Implementacja listy dwukierunkowej
+// wzbogacona o interfejs Iterable w celu latwiejszej implementacji kolejki
 class DoublyLinkedList<T> implements Iterable<T> {
-
+    // podklasa reprezentujaca wezel w liscie dwukierunkowej
     private static class Node<T> {
         private T data;
         private Node<T> prev, next;
-    
+        // konstruktor domyslny
         public Node(T data, Node<T> prev, Node<T> next) {
             this.data = data;
             this.prev = prev;
             this.next = next; 
         }
-    
+        // metody dostepowe
         public T getElement() { return data; }
         public Node<T> getNext() { return next; }
         public Node<T> getPrev() { return prev; }
         public void setPrev(Node<T> prev) { this.prev = prev; }
         public void setNext(Node<T> next) { this.next = next; }
     }
-
+    // wskazniki na "glowe" i "ogon" listy
     private Node<T> head = null, tail = null;
     private int size = 0;
 
+    // Metoda usuwa cala zawartosc listy
     public void clearAll() {
         Node<T> current = head;
         while(current != null) {
@@ -35,15 +37,15 @@ class DoublyLinkedList<T> implements Iterable<T> {
         head = tail = current = null;
         size = 0;
     }
-
+    // Metoda zawraca rozmiar listy 
     public int getSize() {
         return size;
     }
-
+    // Metoda zwraca czy lista jest pusta
     public boolean isEmpty() {
         return size == 0;
     }
-
+    // Metoda dodajaca element na koniec listy
     public void pushBack(T elem) {
         if(isEmpty()) {
             head = tail = new Node<T>(elem, null, null);
@@ -53,7 +55,7 @@ class DoublyLinkedList<T> implements Iterable<T> {
         }
         size++;
     }
-
+    // Metoda dodajaca element na poczatek listy
     public void pushFront(T elem) {
         if(isEmpty()) {
             head = tail = new Node<T>(elem, null, null);
@@ -63,7 +65,7 @@ class DoublyLinkedList<T> implements Iterable<T> {
         }
         size++;
     }
-
+    // Metoda dodajaca element w podane miejsce w liscie
     public void insert(T elem, int index) throws IndexOutOfBoundsException {
         if(index < 0 || index > size) 
             throw new IndexOutOfBoundsException("index out of bound");
@@ -84,17 +86,17 @@ class DoublyLinkedList<T> implements Iterable<T> {
         
         size++;
     }
-
+    // Metoda pozwala "zagladnac"/sprawdzic pierwszy element
     public T peekFirst() throws RuntimeException {
         if (isEmpty()) throw new RuntimeException("Empty list");
         return head.getElement();
     }
-
+    // Metoda pozwala "zagladnac"/sprawdzic ostatni element
     public T peekLast() throws RuntimeException {
         if (isEmpty()) throw new RuntimeException("Empty list");
         return tail.getElement();
     }
-
+    // Metoda usuwajaca pierwszy element listy
     public T popFront() throws RuntimeException {
         if(isEmpty()) 
             throw new RuntimeException("Empty list");
@@ -107,7 +109,7 @@ class DoublyLinkedList<T> implements Iterable<T> {
             head.setPrev(null);
         return data;
     }
-
+    // Metoda usuwajaca ostatni element listy
     public T popBack() throws RuntimeException {
         if(isEmpty()) 
             throw new RuntimeException("Empty list");
@@ -120,7 +122,7 @@ class DoublyLinkedList<T> implements Iterable<T> {
             tail.setNext(null);
         return data;
     }
-
+    // Metoda zwracajaca element o zadanym indeksie
     public T at(int index) {
         if(index < 0 || index > size) 
             throw new IndexOutOfBoundsException("index out of bound");
@@ -129,27 +131,7 @@ class DoublyLinkedList<T> implements Iterable<T> {
             current = current.getNext();
         return current.getElement();
     }
-
-    public boolean remove(Object obj) {
-        Node<T> trav = head;
-        if (obj == null) {
-            for (trav = head; trav != null; trav = trav.getNext()) {
-                if (trav.getElement() == null) {
-                    remove(trav);
-                    return true;
-                }
-            }
-        } else {
-            for (trav = head; trav != null; trav = trav.getNext()) {
-                if (obj.equals(trav.getElement())) {
-                    remove(trav);
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
+    // Implementacja iteratora dla listy dwukierunkowej
     @Override
     public java.util.Iterator<T> iterator() {
         return new java.util.Iterator<T>() {
