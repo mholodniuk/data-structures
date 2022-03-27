@@ -81,12 +81,12 @@ public class MyPriorityQueue<T> {
     // sortowanie nieposortowanej kolejki
     public MyPriorityQueue<T> sort() {
         PrioData tmp;
-        MyPriorityQueue<T> que = new MyPriorityQueue<>();
+        MyPriorityQueue<T> newQueue = new MyPriorityQueue<>();
         while(!queue.isEmpty()) {
             tmp = dequeue();
-            que.enqueue(tmp.getData(), tmp.getPriority());
+            newQueue.enqueue(tmp.getData(), tmp.getPriority());
         }
-        return que;
+        return newQueue;
     }
 
     public static void main(String[] args) {

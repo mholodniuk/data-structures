@@ -1,10 +1,8 @@
 package src;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
-
-import javax.swing.*;
-import java.awt.event.*;
 
 public class MyMessenger {
     private MyPriorityQueue<String> messageQueue;
@@ -29,7 +27,6 @@ public class MyMessenger {
             Scanner myReader = new Scanner(messageFile);
             while(myReader.hasNextLine()) {
                 String line = myReader.nextLine();
-                //String[] lines = line.split("\\s+");
                 messageQueue.enqueue(line, numberOfLines);
                 ++numberOfLines;
             }
