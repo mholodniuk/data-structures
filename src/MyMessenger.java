@@ -17,6 +17,17 @@ public class MyMessenger {
         numberOfLines = 0;
     }
 
+    public void enqueue(String message) {
+        this.messageQueue.enqueue(message, numberOfLines);
+        numberOfLines++;
+    }
+
+    public void clear() {
+        while(!messageQueue.isEmpty()) {
+            messageQueue.dequeue();
+        }
+    }
+
     public int getNumberOfLines() {
         return numberOfLines;
     }
@@ -33,7 +44,7 @@ public class MyMessenger {
             myReader.close();
         }
         catch(FileNotFoundException exception) {
-            System.out.println("An exception has occured");
+            System.out.println("An exception has occured - file not found");
             exception.printStackTrace();
         }
     }

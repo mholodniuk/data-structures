@@ -20,10 +20,13 @@ public class Window {
 }
 
 class SimpleFrame extends JFrame {
-    private static final int DEFAULT_WIDTH = 300;
-    private static final int DEFAULT_HEIGHT = 300;
+    private static final int DEFAULT_WIDTH = 480;
+    private static final int DEFAULT_HEIGHT = 640;
+    MyMessenger messenger;
+    String text;
 
     public SimpleFrame() {
+        messenger = new MyMessenger();
         setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
         JPanel inPanel = new JPanel();
 
@@ -43,7 +46,7 @@ class SimpleFrame extends JFrame {
         inPanel.add(changeType);
 
         JPanel outPanel = new JPanel();
-        JTextArea outText = new JTextArea(10, 50);
+        JTextArea outText = new JTextArea(20, 40); // git rozmiar
         JScrollPane scrollPane = new JScrollPane(outText);
         outPanel.add(scrollPane);
 
@@ -51,7 +54,7 @@ class SimpleFrame extends JFrame {
         JButton sButton = new JButton("Submit");
         actPanel.add(sButton);
 
-        JButton cButton = new JButton("Clear");
+        JButton cButton = new JButton("Send");
         actPanel.add(cButton);
 
         add(inPanel, BorderLayout.NORTH);
@@ -71,9 +74,22 @@ class SimpleFrame extends JFrame {
             }
             if(newLine.isSelected())
                 outText.append(text + "\n");
-            else
+            else 
                 outText.append(text);
+                
         });
-        cButton.addActionListener(event -> outText.setText(""));
+
+        cButton.addActionListener(event -> {
+            try {
+                messenger.enqueue(outText.getText()); // tutaj ten wyajtek cos nie dziala
+            } 
+            catch (NullPointerException exception) {
+                System.out.println("Cannot send message, message box is empty!");
+                exception.printStackTrace();
+            }
+            messenger.printMessage();
+            messenger.clear();
+            outText.setText("");
+        });
     }
 }
