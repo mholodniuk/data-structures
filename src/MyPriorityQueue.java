@@ -41,8 +41,8 @@ public class MyPriorityQueue<T> {
 
     // Metoda usuwa ostatni element (dane + priorytet) z kolejki
     public PrioData dequeue() {
-        T data = queue.peekLast().data;
-        int priority = queue.peekLast().priority;
+        T data = queue.peekLast().getData();
+        int priority = queue.peekLast().getPriority();
         queue.popBack();
         return new PrioData(data, priority);
     }
@@ -50,8 +50,9 @@ public class MyPriorityQueue<T> {
     // wypisanie zawartosci kolejki od poczatku
     public void printAll() {
         for(PrioData elem: queue) {
-            System.out.println(elem.getData() + " " + elem.getPriority());
+            System.out.print(elem.getData() + " ");
         }
+        System.out.print("\n");
     }
 
     // sprawdzenie czy kolejka jest pusta
@@ -79,7 +80,7 @@ public class MyPriorityQueue<T> {
         PrioData tmp;
         MyPriorityQueue<T> newQueue = new MyPriorityQueue<>();
         while(!queue.isEmpty()) {
-            tmp = dequeue();
+            tmp = this.dequeue();
             newQueue.enqueue(tmp.getData(), tmp.getPriority());
         }
         return newQueue;
@@ -94,11 +95,9 @@ public class MyPriorityQueue<T> {
         queue.enqueue("piec", 4);
         queue.enqueue("cztery", 3);
         queue.printAll();
-        System.out.println("\n");
 
         MyPriorityQueue<String> kolejka = queue.shuffle();
         kolejka.printAll();
-        System.out.println("\n");
 
         kolejka = kolejka.sort();
         kolejka.printAll();

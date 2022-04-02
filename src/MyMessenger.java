@@ -17,11 +17,13 @@ public class MyMessenger {
         this.messageQueue = new MyPriorityQueue<>();
         numberOfLines = 0;
     }
+
     // Metoda dodajaca wiadomosc do kolejki
     public void enqueue(String message) {
         this.messageQueue.enqueue(message, numberOfLines);
         numberOfLines++;
     }
+
     // Metoda czyszczaca kolejke wiadomosci
     public void clear() {
         while(!messageQueue.isEmpty()) {
@@ -30,10 +32,7 @@ public class MyMessenger {
         // kazde wyslanie wiadomosci resetuje sesje kolejki
         numberOfLines = 0;
     }
-    // Metoda dostepowa ------ do usuniecia
-    public int getNumberOfLines() {
-        return numberOfLines;
-    }
+
     // Metoda (testowa) pozwalajaca na wczytanie wiadomosci z pliku
     public void readFromFile(String filename) {
         try {
@@ -51,17 +50,21 @@ public class MyMessenger {
             exception.printStackTrace();
         }
     }
+
     // Metoda symulujaca mieszanie sie wiadomosci
     public void shuffle() {
         messageQueue = messageQueue.shuffle();
     }
+
     // Metoda symulujaca odbieranie wiadomosci
     public void sort() {
         messageQueue = messageQueue.sort();
     }
+    
     // Metoda wypisujaca zawartosc wiadomosci
     public void printMessage() {
         messageQueue.printAll();
+        System.out.println("\n");
     }
     public static void main(String[] args) {
         MyMessenger mess = new MyMessenger();
@@ -69,7 +72,6 @@ public class MyMessenger {
         
         System.out.println("Oryginalna wiadomosc: ");
         mess.printMessage();
-        System.out.println("Ilosc linii w wiadomosci: " + mess.getNumberOfLines() + "\n");
 
         System.out.println("Pomieszana wiadomosc: ");
         mess.shuffle();

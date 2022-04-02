@@ -10,9 +10,9 @@ public class Window {
            public void run() {
                 MyMessengerFrame frame = new MyMessengerFrame();
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.setTitle("MyMessenger Jan");
+                frame.setTitle("MyMessenger");
                 frame.setVisible(true);
-           } 
+            } 
         });
     }
 }
@@ -20,10 +20,11 @@ public class Window {
 class MyMessengerFrame extends JFrame {
     private static final int DEFAULT_WIDTH = 480;
     private static final int DEFAULT_HEIGHT = 640;
-    MyMessenger messenger;
+    MyMessenger messengerJan;
+    MyMessenger messengerAnna;
 
     public MyMessengerFrame() {
-        messenger = new MyMessenger();
+        messengerJan = new MyMessenger();
         setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
         JPanel inPanel = new JPanel();
 
@@ -69,12 +70,14 @@ class MyMessengerFrame extends JFrame {
                     text = text.toLowerCase();
                     break;
             }
+            String[] messages = text.split(" ");
+            for(String message: messages) {
+                messengerJan.enqueue(message);
+            }
             if(newLine.isSelected()) {
-                messenger.enqueue(text);
                 outText.append(text + "\n");
             }
             else {
-                messenger.enqueue(text);
                 outText.append(text);
             }   
         });
@@ -82,20 +85,22 @@ class MyMessengerFrame extends JFrame {
         cButton.addActionListener(event -> {
             System.out.print("\033[H\033[2J");  
             System.out.flush();
-            outText.setText("");
+            outText.setText(" ");
 
             System.out.println("Wiadomość wysłana przez Jana:");
-            messenger.printMessage();
+            messengerJan.printMessage();
 
             System.out.println("Wiadomość otrzymana przez Annę:");
-            messenger.shuffle();
-            messenger.printMessage();
+            messengerJan.shuffle();
+            messengerJan.printMessage();
+            messengerAnna = messengerJan;
 
             System.out.println("Wiadomość przetworzona przez Annę:");
-            messenger.sort();
-            messenger.printMessage();
+            messengerAnna.sort();
+            messengerAnna.printMessage();
 
-            messenger.clear(); 
+            messengerJan.clear();
+            messengerAnna.clear();
         });
     }
 }

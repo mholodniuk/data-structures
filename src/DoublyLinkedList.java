@@ -155,4 +155,24 @@ class DoublyLinkedList<T> implements Iterable<T> {
             }
         };
     }
+    public static void main(String[] args) {
+        DoublyLinkedList<Integer> list = new DoublyLinkedList<>();
+        list.pushBack(1);
+        list.pushBack(3);
+        list.pushBack(4);
+        list.pushFront(0);
+        list.insert(2, 2);
+
+        for(Integer elem: list)
+            System.out.println(elem);
+
+        System.out.println("Element o indeksie 1: " + list.at(1) + "\n");
+
+        list.popBack();
+        list.popFront();
+        System.out.println("Stan po operacji popBack() i popFront()");
+        for(Integer elem: list)
+            System.out.println(elem);
+
+    }
 }
